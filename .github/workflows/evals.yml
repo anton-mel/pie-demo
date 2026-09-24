@@ -25,5 +25,5 @@ jobs:
           PLATFORMS: ${{ contains(github.event.pull_request.labels.*.name, 'evals-mac') && 'mac' || contains(github.event.pull_request.labels.*.name, 'evals-gpu') && 'gpu' || '' }}
         run: |
           [ -n "$GH_TOKEN" ] || { echo "::warning::PIE_EVALS_DISPATCH_TOKEN is not set"; exit 0; }
-          gh api repos/pie-project/pie-evals/dispatches -f event_type=pie-eval \
+          gh api "repos/${{ vars.PIE_EVALS_REPO || 'pie-project/pie-evals' }}/dispatches" -f event_type=pie-eval \
             -f "client_payload[pie_commit]=$COMMIT" -f "client_payload[pr]=$PR" -f "client_payload[mode]=$MODE" -f "client_payload[platforms]=$PLATFORMS"
