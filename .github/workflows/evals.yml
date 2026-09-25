@@ -15,4 +15,4 @@ jobs:
           GH_TOKEN: ${{ secrets.PIE_EVALS_DISPATCH_TOKEN }}
         run: |
           [ -n "$GH_TOKEN" ] || { echo "::warning::PIE_EVALS_DISPATCH_TOKEN is not set"; exit 0; }
-          gh api repos/pie-project/pie-evals/dispatches -f event_type=pie-eval -f "client_payload[pie_commit]=$GITHUB_SHA"
+          gh api "repos/${{ vars.PIE_EVALS_REPO || 'pie-project/pie-evals' }}/dispatches" -f event_type=pie-eval -f "client_payload[pie_commit]=$GITHUB_SHA"
